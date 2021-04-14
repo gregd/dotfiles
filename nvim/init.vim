@@ -26,6 +26,7 @@ Plug 'tpope/vim-sensible'
 
 " Color schemes
 Plug 'sainnhe/edge'
+"Plug 'cocopon/iceberg.vim'
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
@@ -107,7 +108,7 @@ filetype plugin indent on
 
 set number                  " Line numbers on
 set relativenumber          " Relative numbers on
-set completeopt=menuone,noinsert
+set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 set expandtab
 set autoindent
@@ -132,6 +133,7 @@ set splitbelow          " Puts new split windows to the bottom of the current
 set nowrap              " Do not wrap long lines
 set pumheight=25        " Avoid the pop up menu occupying the whole screen
 set t_Co=256            " Use 256 colors
+set noswapfile
 
 augroup highlight_yank
   autocmd!
@@ -152,14 +154,15 @@ vnoremap > >gv
 nnoremap H ^
 " Move to the end of line
 nnoremap L $
-" Quick command mode
-nnoremap <CR> :
-" In the quickfix window, <CR> is used to jump to the error under the cursor, so undefine the mapping there.
-autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 " Yank to the end of line
 nnoremap Y y$
 " Toggle pastemode
 nnoremap <silent> <Leader>tp :setlocal paste!<CR>
+
+" Quick command mode
+"nnoremap <CR> :
+" In the quickfix window, <CR> is used to jump to the error under the cursor, so undefine the mapping there.
+"autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 
 " greatest remap ever
 vnoremap <leader>p "_dP
@@ -364,9 +367,9 @@ let g:nvim_tree_indent_markers = 1
 let g:nvim_tree_follow = 1
 
 " Top tabline
-nnoremap <silent>    <A-,> :BufferPrevious<CR>
-nnoremap <silent>    <A-.> :BufferNext<CR>
-nnoremap <silent>    <A-c> :BufferClose<CR>
+nnoremap <silent>    <C-left> :BufferPrevious<CR>
+nnoremap <silent>    <C-right> :BufferNext<CR>
+nnoremap <silent>    <C-x> :BufferClose<CR>
 let bufferline = get(g:, 'bufferline', {})
 let bufferline.tabpages = v:false
 let bufferline.closable = v:false
