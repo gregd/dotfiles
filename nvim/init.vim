@@ -33,6 +33,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 Plug 'steelsojka/completion-buffers'
 Plug 'onsails/lspkind-nvim'
+"Plug 'simrat39/rust-tools.nvim'
 Plug 'kosayoda/nvim-lightbulb'
 
 " Code snippets
@@ -254,6 +255,12 @@ local servers = { "rust_analyzer" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { on_attach = on_attach }
 end
+
+vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
+
+require('lspkind').init({
+    with_text = true,
+})
 EOF
 
 " Completion
@@ -271,13 +278,6 @@ let g:completion_chain_complete_list = [
     \{'mode': '<c-n>'}
 \]
 
-lua <<EOF
-vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
-
-require('lspkind').init({
-    with_text = true,
-})
-EOF
 " -------------------- LSP ---------------------------------
 
 " Fuzzy finder
