@@ -74,10 +74,14 @@ Plug 'phaazon/hop.nvim'
 Plug 'glepnir/galaxyline.nvim'
 
 " Indent lines
-Plug 'Yggdroot/indentLine'
+"Plug 'Yggdroot/indentLine'
+Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
+
+" Fast comment line
+Plug 'terrortylor/nvim-comment'
 
 " Auto close bracket on return 
-Plug 'rstacruz/vim-closer'
+"Plug 'rstacruz/vim-closer'
 
 " Git 
 Plug 'TimUntersberger/neogit'
@@ -122,7 +126,7 @@ set softtabstop=4
 set shiftwidth=4
 set cmdheight=2
 set updatetime=50
-set timeoutlen=2000
+set timeoutlen=1500
 set signcolumn=yes
 set clipboard=unnamed,unnamedplus
 set scrolljump=1        " Line to scroll when cursor leaves screen
@@ -134,7 +138,12 @@ set splitbelow          " Puts new split windows to the bottom of the current
 set nowrap              " Do not wrap long lines
 set pumheight=25        " Avoid the pop up menu occupying the whole screen
 set t_Co=256            " Use 256 colors
-set noswapfile
+set noswapfile          " Do not create swap files
+set noshowmode          " We don't need to see things like -- INSERT -- anymore
+set encoding=utf-8      " Set default encoding
+set splitright          " Puts new vsplit windows to the right of the current
+set splitbelow          " Puts new split windows to the bottom of the current
+set showcmd             " Show partial commands in status line and Selected characters/lines in visual modeF
 
 augroup highlight_yank
   autocmd!
@@ -147,6 +156,10 @@ augroup vimrc_incsearch_highlight
   autocmd CmdlineEnter /,\? :set hlsearch
   autocmd CmdlineLeave /,\? :set nohlsearch
 augroup END
+
+" Quit normal mode
+"nnoremap <silent> <Leader>q  :q<CR>
+"nnoremap <silent> <Leader>Q  :qa!<CR>
 
 " Visual shifting (does not exit Visual mode)
 vnoremap < <gv
@@ -261,6 +274,10 @@ vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_li
 require('lspkind').init({
     with_text = true,
 })
+
+require('nvim_comment').setup()
+vim.api.nvim_set_keymap("n", "<leader>/", ":CommentToggle<CR>", {noremap=true, silent = true})
+vim.api.nvim_set_keymap("v", "<leader>/", ":CommentToggle<CR>", {noremap=true, silent = true})
 EOF
 
 " Completion
@@ -281,20 +298,21 @@ let g:completion_chain_complete_list = [
 " -------------------- LSP ---------------------------------
 
 " Fuzzy finder
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fjf <cmd>Telescope find_files<cr>
+nnoremap <leader>ff <cmd>Telescope git_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>fq <cmd>Telescope quickfix<cr>
+nnoremap <leader>fjh <cmd>Telescope help_tags<cr>
 nnoremap <leader>fs <cmd>Telescope current_buffer_fuzzy_find<cr>
-nnoremap <leader>fgf <cmd>Telescope git_files<cr>
-nnoremap <leader>fgs <cmd>lua require('telescope.builtin').git_status()<cr>
-nnoremap <leader>fgc <cmd>lua require('telescope.builtin').git_commits()<cr>
-nnoremap <leader>fvb <cmd>lua require('telescope.builtin').buffers({ show_all_buffers = true })<cr>
-nnoremap <leader>fvh <cmd>lua require('telescope.builtin').oldfiles()<cr>
-nnoremap <leader>fvc <cmd>lua require('telescope.builtin').commands()<cr>
-nnoremap <leader>fvr <cmd>lua require('telescope.builtin').registers()<cr>
-nnoremap <leader>fla <cmd>lua require('telescope.builtin').lsp_code_actions()<cr>
-nnoremap <leader>flr <cmd>lua require('telescope.builtin').lsp_references()<cr>
-nnoremap <leader>fld <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
+nnoremap <leader>fjs <cmd>lua require('telescope.builtin').git_status()<cr>
+nnoremap <leader>fjc <cmd>lua require('telescope.builtin').git_commits()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers({ show_all_buffers = true })<cr>
+nnoremap <leader>fo <cmd>lua require('telescope.builtin').oldfiles()<cr>
+nnoremap <leader>fc <cmd>lua require('telescope.builtin').commands()<cr>
+nnoremap <leader>fp <cmd>lua require('telescope.builtin').registers()<cr>
+nnoremap <leader>fa <cmd>lua require('telescope.builtin').lsp_code_actions()<cr>
+nnoremap <leader>fr <cmd>lua require('telescope.builtin').lsp_references()<cr>
+nnoremap <leader>fd <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
 
 " fzf
 let g:fzf_preview_window = ['right:70%', 'ctrl-/']
@@ -303,6 +321,9 @@ lua <<EOF
 local actions = require('telescope.actions')
 require('telescope').setup{
   defaults = {
+    set_env = {['COLORTERM'] = 'truecolor'},
+    results_height = 1,
+    results_width = 0.8,
     layout_strategy = "horizontal", 
     prompt_position = "top",
     sorting_strategy = "ascending",
@@ -312,10 +333,17 @@ require('telescope').setup{
     --},
     mappings = {
       i = {
-        ["<C-x>"] = false,
-        ["<C-q>"] = actions.send_to_qflist,
-        ["<C-i>"] = actions.select_horizontal,
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<C-q>"] = actions.smart_send_to_qflist,
+        ["<esc>"] = actions.close,
+        ["<CR>"] = actions.select_default + actions.center,
       },
+      n = {
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<C-q>"] = actions.smart_send_to_qflist,
+      }
     }
   }
 }
