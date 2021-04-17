@@ -105,6 +105,7 @@ set number                  " Line numbers on
 set relativenumber          " Relative numbers on
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
+set autoindent
 set smartindent
 set smarttab
 set ignorecase
