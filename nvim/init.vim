@@ -46,7 +46,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
 " fzf
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
 " Syntax
@@ -84,11 +84,11 @@ Plug 'terrortylor/nvim-comment'
 "Plug 'rstacruz/vim-closer'
 
 " Git 
-Plug 'TimUntersberger/neogit'
+Plug 'tpope/vim-fugitive'
 Plug 'lewis6991/gitsigns.nvim'
 
-" Spell checker
-"Plug 'lewis6991/spellsitter.nvim'
+" Key bindings help
+Plug 'liuchengxu/vim-which-key'
 
 " Start-up screen
 Plug 'glepnir/dashboard-nvim'
@@ -115,35 +115,34 @@ set number                  " Line numbers on
 set relativenumber          " Relative numbers on
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
-set expandtab
-set autoindent
-set smartindent
+"set smartindent
 set ignorecase
 set nohlsearch
 set smartcase
+set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set cmdheight=2
 set updatetime=50
-set timeoutlen=1500
+set timeoutlen=1000
 set signcolumn=yes
 set clipboard=unnamed,unnamedplus
 set scrolljump=1        " Line to scroll when cursor leaves screen
 set scrolloff=6         " Minumum lines to keep above and below cursor
 set whichwrap+=<,>,h,l  " Allow backspace and cursor keys to cross line boundaries
-set cursorline          " Highlight current line
+"set cursorline          " Highlight current line
 set splitright          " Puts new vsplit windows to the right of the current
 set splitbelow          " Puts new split windows to the bottom of the current
 set nowrap              " Do not wrap long lines
 set pumheight=25        " Avoid the pop up menu occupying the whole screen
+set vb t_vb=            " No more beeps
 set t_Co=256            " Use 256 colors
 set noswapfile          " Do not create swap files
 set noshowmode          " We don't need to see things like -- INSERT -- anymore
-set encoding=utf-8      " Set default encoding
-set splitright          " Puts new vsplit windows to the right of the current
-set splitbelow          " Puts new split windows to the bottom of the current
-set showcmd             " Show partial commands in status line and Selected characters/lines in visual modeF
+set backspace=indent,eol,start
+set nofoldenable
+set mouse=a
 
 augroup highlight_yank
   autocmd!
@@ -161,37 +160,63 @@ augroup END
 "nnoremap <silent> <Leader>q  :q<CR>
 "nnoremap <silent> <Leader>Q  :qa!<CR>
 
-" Visual shifting (does not exit Visual mode)
-vnoremap < <gv
-vnoremap > >gv
-" Move to the start of line
-nnoremap H ^
-" Move to the end of line
-nnoremap L $
-" Yank to the end of line
-nnoremap Y y$
-" Toggle pastemode
-nnoremap <silent> <Leader>tp :setlocal paste!<CR>
-
 " Quick command mode
 "nnoremap <CR> :
 " In the quickfix window, <CR> is used to jump to the error under the cursor, so undefine the mapping there.
 "autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 
-" greatest remap ever
-vnoremap <leader>p "_dP
-vnoremap <leader>d "_d
-nnoremap <leader>d "_d
+" Left and right can switch buffers
+"nnoremap <left> :bp<CR>
+"nnoremap <right> :bn<CR>
 
-"nmap <silent> <C-k> :wincmd k<CR>
-"nmap <silent> <C-j> :wincmd j<CR>
-"nmap <silent> <C-h> :wincmd h<CR>
-"nmap <silent> <C-l> :wincmd l<CR>
+" Visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
+
+" Move to the start of line
+nnoremap H ^
+" Move to the end of line
+nnoremap L $
+
+" Yank to the end of line
+nnoremap Y y$
+
+nnoremap J <nop>
+nnoremap <Leader>j J
+
+" Display help
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+
+" Toggle pastemode
+nnoremap <silent> <Leader>tp :setlocal paste!<CR>
+
+" do not overwritte the default register
+"vnoremap <Leader>p "_dP
+vnoremap <Leader>d "_d
+nnoremap <Leader>d "_d
+
+" paste many times over selected text
+xnoremap <expr> p 'pgv"'.v:register.'y`>'
+xnoremap <expr> P 'Pgv"'.v:register.'y`>'
+
+" Open new line below and above current line
+nnoremap <Leader>o o<esc>
+nnoremap <Leader>O O<esc>
+
+" qq to record, Q to replay
+nnoremap Q @q
+
+" Search results centered please
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <silent> g* g*zz
 
 nnoremap <Leader>ww <C-W>w
 nnoremap <Leader>wr <C-W>r
 nnoremap <Leader>wc <C-W>c
-"nnoremap <Leader>wq <C-W>q
+nnoremap <Leader>wq <C-W>q
 nnoremap <Leader>wj <C-W>j
 nnoremap <Leader>wk <C-W>k
 nnoremap <Leader>wh <C-W>h
@@ -226,7 +251,7 @@ local on_attach = function(client, bufnr)
   local opts = { noremap=true, silent=true }
   buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'gh', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'K',  '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', 'gs>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
@@ -271,10 +296,12 @@ end
 
 vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
 
+-- Add icons to LSP suggestions
 require('lspkind').init({
     with_text = true,
 })
 
+-- Easy code commetns 
 require('nvim_comment').setup()
 vim.api.nvim_set_keymap("n", "<leader>/", ":CommentToggle<CR>", {noremap=true, silent = true})
 vim.api.nvim_set_keymap("v", "<leader>/", ":CommentToggle<CR>", {noremap=true, silent = true})
@@ -408,8 +435,6 @@ lua <<EOF
 vim.api.nvim_set_keymap('n', '<C-g>', "<cmd>lua require'hop'.hint_words()<cr>", {})
 
 -- Git status 
-local neogit = require('neogit')
-neogit.setup {}
 
 -- Git signs 
 require('gitsigns').setup({
@@ -421,14 +446,6 @@ require('gitsigns').setup({
     changedelete = {hl = 'GitSignsChange', text = '‖', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
   },
 })
-
--- Spell checker
---require('spellsitter').setup {
---  hl = 'SpellBad',
---  captures = {'comment'},
---  hunspell_cmd = 'hunspell',
---  hunspell_args = {'-d','en_US,pl_PL'},
---}
 EOF
 
 " Auto-save files
@@ -440,6 +457,7 @@ luafile ~/.config/nvim/eviline.lua
 
 " Indent lines
 let g:indentLine_char = ''
+let g:indent_blankline_filetype = ['vim', 'rust']
 
 " Start-up screen
 let g:dashboard_default_executive = 'telescope'
