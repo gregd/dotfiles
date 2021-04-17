@@ -21,9 +21,6 @@ let mapleader = "\<Space>"
 
 call plug#begin('~/.config/nvim/plugged')
 
-" Sensible default 
-Plug 'tpope/vim-sensible'
-
 " Color schemes
 Plug 'sainnhe/edge'
 "Plug 'cocopon/iceberg.vim'
@@ -64,9 +61,6 @@ Plug 'romgrk/barbar.nvim'
 " Auto-save files
 Plug '907th/vim-auto-save'
 
-" Registers popup
-Plug 'gennaro-tedesco/nvim-peekup'
-
 " Jump anywhere in a document
 Plug 'phaazon/hop.nvim'
 
@@ -79,9 +73,6 @@ Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
 
 " Fast comment line
 Plug 'terrortylor/nvim-comment'
-
-" Auto close bracket on return 
-"Plug 'rstacruz/vim-closer'
 
 " Git 
 Plug 'tpope/vim-fugitive'
@@ -115,7 +106,8 @@ set number                  " Line numbers on
 set relativenumber          " Relative numbers on
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
-"set smartindent
+set smartindent
+set smarttab
 set ignorecase
 set nohlsearch
 set smartcase
@@ -416,10 +408,11 @@ nnoremap <leader>nf :NvimTreeFindFile<CR>
 let g:nvim_tree_width = 40
 let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ]
 let g:nvim_tree_gitignore = 1
-let g:nvim_tree_auto_open = 0
+let g:nvim_tree_auto_open = 1 
 let g:nvim_tree_auto_close = 1
 let g:nvim_tree_indent_markers = 1
 let g:nvim_tree_follow = 1
+let g:nvim_tree_group_empty = 1
 
 " Top tabline
 nnoremap <silent>    <C-left> :BufferPrevious<CR>
