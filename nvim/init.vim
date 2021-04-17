@@ -22,8 +22,8 @@ let mapleader = "\<Space>"
 call plug#begin('~/.config/nvim/plugged')
 
 " Color schemes
-Plug 'sainnhe/edge'
-"Plug 'cocopon/iceberg.vim'
+"Plug 'sainnhe/edge'
+Plug 'gregd/darcula'
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
@@ -67,7 +67,7 @@ Plug 'phaazon/hop.nvim'
 Plug 'glepnir/galaxyline.nvim'
 
 " Indent lines
-"Plug 'Yggdroot/indentLine'
+Plug 'Yggdroot/indentLine'
 Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
 
 " Fast comment line
@@ -94,9 +94,7 @@ autocmd VimEnter *
 if has('termguicolors')
   set termguicolors
 endif
-let g:edge_style = 'aura'
-let g:edge_disable_italic_comment = 1
-colorscheme edge
+colorscheme darcula
 
 syntax enable
 filetype plugin indent on
@@ -272,9 +270,9 @@ local on_attach = function(client, bufnr)
   -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
     vim.api.nvim_exec([[
-      hi LspReferenceRead cterm=bold ctermbg=red guibg=#303030
-      hi LspReferenceText cterm=bold ctermbg=red guibg=#303030
-      hi LspReferenceWrite cterm=bold ctermbg=red guibg=#303030
+      hi LspReferenceRead cterm=bold ctermbg=red guibg=#344134
+      hi LspReferenceText cterm=bold ctermbg=red guibg=#344134
+      hi LspReferenceWrite cterm=bold ctermbg=red guibg=#344134
       augroup lsp_document_highlight
 	autocmd! * <buffer>
 	autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
@@ -513,10 +511,13 @@ require('gitsigns').setup({
     change       = {hl = 'GitSignsChange', text = '┃', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
     delete       = {hl = 'GitSignsDelete', text = '▁', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
     topdelete    = {hl = 'GitSignsDelete', text = '▔', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-    changedelete = {hl = 'GitSignsChange', text = '‖', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+    changedelete = {hl = 'GitSignsChange', text = '┃', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
   },
 })
 EOF
+hi! link GitSignsAdd PositiveSign
+hi! link GitSignsChange WarningSign 
+hi! link GitSignsDelete ErrorSign 
 
 " Auto-save files
 let g:auto_save = 1
