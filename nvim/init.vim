@@ -67,7 +67,6 @@ Plug 'phaazon/hop.nvim'
 Plug 'glepnir/galaxyline.nvim'
 
 " Indent lines
-Plug 'Yggdroot/indentLine'
 Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
 
 " Fast comment line
@@ -221,10 +220,10 @@ nnoremap <Leader>we <C-W>=
 nnoremap <Leader>ws <C-W>s
 nnoremap <Leader>wv <C-W>v
 
-nnoremap <C-k> :cnext<CR>zz
-nnoremap <C-j> :cprev<CR>zz
-"nnoremap <leader>k :lnext<CR>zz
-"nnoremap <leader>j :lprev<CR>zz
+nnoremap <C-j> :cnext<CR>zz
+nnoremap <C-k> :cprev<CR>zz
+"nnoremap <leader>j :lnext<CR>zz
+"nnoremap <leader>k :lprev<CR>zz
 "nnoremap <leader>ps :lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep For > ")})<CR>
 "nnoremap <leader>pw :lua require('telescope.builtin').grep_string { search = vim.fn.expand("<cword>") }<CR>
 
@@ -371,7 +370,16 @@ vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 
 local saga = require 'lspsaga'
-saga.init_lsp_saga()
+saga.init_lsp_saga {
+  code_action_keys = {
+    quit = '<esc>',
+    exec = '<CR>'
+  },
+  rename_action_keys = {
+    quit = '<esc>',
+    exec = '<CR>'  -- quit can be a table
+  },
+}
 
 -- Add icons to LSP suggestions
 require('lspkind').init({
@@ -383,6 +391,9 @@ require('nvim_comment').setup()
 vim.api.nvim_set_keymap("n", "<leader>/", ":CommentToggle<CR>", {noremap=true, silent = true})
 vim.api.nvim_set_keymap("v", "<leader>/", ":CommentToggle<CR>", {noremap=true, silent = true})
 EOF
+
+hi! link LspSagaLightBulbSign WarningSign 
+hi! link LspSagaLightBulb function 
 
 inoremap <silent><expr> <C-Space> compe#complete()
 inoremap <silent><expr> <CR>      compe#confirm('<CR>')
@@ -483,7 +494,7 @@ nnoremap <leader>nf :NvimTreeFindFile<CR>
 let g:nvim_tree_width = 40
 let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ]
 let g:nvim_tree_gitignore = 1
-let g:nvim_tree_auto_open = 1 
+let g:nvim_tree_auto_open = 0 
 let g:nvim_tree_auto_close = 1
 let g:nvim_tree_indent_markers = 1
 let g:nvim_tree_follow = 1
