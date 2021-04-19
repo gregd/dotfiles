@@ -1,0 +1,43 @@
+# Starship prompt configuration
+# Read docs at https://starship.rs/config/
+
+add_newline = false
+
+format = """
+$username\
+$hostname\
+$shlvl\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$docker_context\
+$memory_usage\
+$env_var\
+$custom\
+$line_break\
+$jobs\
+$battery\
+$time\
+$status\
+$shell\
+$character"""
+
+[line_break]
+disabled = true
+
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[➜](bold green)"
+
+[package]
+disabled = true
+
+[directory]
+truncation_length = 3
+fish_style_pwd_dir_length = 1
+
+[git_branch]
+symbol = ""
+
