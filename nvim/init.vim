@@ -172,6 +172,8 @@ nnoremap Y y$
 
 nnoremap J <nop>
 nnoremap <Leader>j J
+nnoremap K <nop> 
+nnoremap <Leader>k K
 
 " Display help
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
@@ -243,9 +245,9 @@ local on_attach = function(client, bufnr)
   --buf_set_keymap('n', 'K',  '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   --buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   --buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<leader>law', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<leader>lrw', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<leader>llw', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<leader>lwa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<leader>lwr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<leader>lwl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
   --buf_set_keymap('n', '<leader>lt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   --buf_set_keymap('n', '<leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   --buf_set_keymap('n', '<leader>ls', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
@@ -255,7 +257,7 @@ local on_attach = function(client, bufnr)
   --buf_set_keymap('n', '<leader>ll', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   --buf_set_keymap('n', '<leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
 
-  buf_set_keymap('n', 'K', ':Lspsaga hover_doc<CR>', opts)
+  buf_set_keymap('n', '<leader>lh', ':Lspsaga hover_doc<CR>', opts)
   buf_set_keymap('n', '<leader>lr', ':Lspsaga rename<CR>', opts)
   buf_set_keymap('n', '<leader>la', ':Lspsaga code_action<CR>', opts)
 
@@ -388,8 +390,7 @@ require('lspkind').init({
 
 -- Easy code commetns 
 require('nvim_comment').setup()
-vim.api.nvim_set_keymap("n", "<leader>/", ":CommentToggle<CR>", {noremap=true, silent = true})
-vim.api.nvim_set_keymap("v", "<leader>/", ":CommentToggle<CR>", {noremap=true, silent = true})
+vim.api.nvim_set_keymap("n", "<leader>cc", ":CommentToggle<CR>", {noremap=true, silent = true})
 EOF
 
 hi! link LspSagaLightBulbSign WarningSign 
@@ -463,10 +464,10 @@ require'nvim-treesitter.configs'.setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "gnn",
-      node_incremental = "gnn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
+      init_selection = "<leader>ss",
+      node_incremental = "<leader>ss",
+      scope_incremental = "<leader>si",
+      node_decremental = "<leader>sd",
     },
   },
   indent = {
@@ -503,15 +504,15 @@ let g:nvim_tree_group_empty = 1
 " Top tabline
 nnoremap <silent>    <C-left> :BufferPrevious<CR>
 nnoremap <silent>    <C-right> :BufferNext<CR>
-nnoremap <silent>    <C-x> :BufferClose<CR>
+nnoremap <silent>    <leader>bc :BufferClose<CR>
 let bufferline = get(g:, 'bufferline', {})
 let bufferline.tabpages = v:false
-let bufferline.closable = v:false
+let bufferline.closable = v:true
 let bufferline.icon_separator_active = ''
 
 lua <<EOF
 -- Jump anywhere in a document
-vim.api.nvim_set_keymap('n', '<C-g>', "<cmd>lua require'hop'.hint_words()<cr>", {})
+vim.api.nvim_set_keymap('n', '<leader>ga', "<cmd>lua require'hop'.hint_words()<cr>", {})
 
 -- Git status 
 
