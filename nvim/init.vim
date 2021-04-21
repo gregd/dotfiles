@@ -222,8 +222,8 @@ nnoremap <Leader>we <C-W>=
 nnoremap <Leader>ws <C-W>s
 nnoremap <Leader>wv <C-W>v
 
-nnoremap <C-j> :cnext<CR>zz
-nnoremap <C-k> :cprev<CR>zz
+nnoremap <silent> <C-l> :cnext<CR>zz
+nnoremap <silent> <C-h> :cprev<CR>zz
 "nnoremap <leader>j :lnext<CR>zz
 "nnoremap <leader>k :lprev<CR>zz
 "nnoremap <leader>ps :lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep For > ")})<CR>
@@ -485,6 +485,16 @@ require'nvim-treesitter.configs'.setup {
       },
     },
   },
+  move = {
+      enable = true,
+      set_jumps = false, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        ["]m"] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["[m"] = "@class.outer",
+      },
+    },
 }
 EOF
 
@@ -502,19 +512,21 @@ let g:nvim_tree_follow = 1
 let g:nvim_tree_group_empty = 1
 
 " Top tabline
-nnoremap <silent>    <C-left> :BufferPrevious<CR>
-nnoremap <silent>    <C-right> :BufferNext<CR>
-nnoremap <silent>    <leader>bc :BufferClose<CR>
+nnoremap <silent>    <C-j> :BufferPrevious<CR>
+nnoremap <silent>    <C-k> :BufferNext<CR>
+nnoremap <silent>    <C-q> :BufferClose<CR>
 let bufferline = get(g:, 'bufferline', {})
 let bufferline.tabpages = v:false
 let bufferline.closable = v:true
 let bufferline.icon_separator_active = ''
 
+" Git status 
+nnoremap <silent>    <Leader>gitd :Gvdiffsplit<CR>
+nnoremap <silent>    <Leader>gitl :Glog --<CR>
+
 lua <<EOF
 -- Jump anywhere in a document
 vim.api.nvim_set_keymap('n', '<leader>ga', "<cmd>lua require'hop'.hint_words()<cr>", {})
-
--- Git status 
 
 -- Git signs 
 require('gitsigns').setup({
