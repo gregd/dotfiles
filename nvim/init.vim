@@ -170,10 +170,10 @@ nnoremap L $
 " Yank to the end of line
 nnoremap Y y$
 
-nnoremap J <nop>
+nnoremap J <Nop>
 nnoremap <Leader>j J
-nnoremap K <nop> 
-nnoremap <Leader>k K
+nnoremap K <Nop>
+"nnoremap <Leader>k K
 
 " Display help
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
