@@ -76,6 +76,9 @@ Plug 'terrortylor/nvim-comment'
 Plug 'tpope/vim-fugitive'
 Plug 'lewis6991/gitsigns.nvim'
 
+" Search and replace in many files
+Plug 'windwp/nvim-spectre'
+
 " Key bindings help
 Plug 'liuchengxu/vim-which-key'
 
@@ -391,6 +394,9 @@ require('lspkind').init({
 -- Easy code commetns 
 require('nvim_comment').setup()
 vim.api.nvim_set_keymap("n", "<leader>cc", ":CommentToggle<CR>", {noremap=true, silent = true})
+
+-- Search and replace in many files
+require('spectre').setup()
 EOF
 
 hi! link LspSagaLightBulbSign WarningSign 
@@ -403,6 +409,8 @@ inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 " -------------------- LSP ---------------------------------
+
+nnoremap <leader>sr :lua require('spectre').open()<CR>
 
 " Fuzzy finder
 nnoremap <leader>fjf <cmd>Telescope find_files<cr>
