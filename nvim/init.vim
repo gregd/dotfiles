@@ -135,6 +135,7 @@ set noshowmode          " We don't need to see things like -- INSERT -- anymore
 set backspace=indent,eol,start
 set nofoldenable
 set mouse=a
+set hidden
 
 augroup highlight_yank
   autocmd!
