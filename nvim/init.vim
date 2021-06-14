@@ -168,8 +168,10 @@ vnoremap > >gv
 
 " Move to the start of line
 nnoremap H ^
+vnoremap H ^
 " Move to the end of line
 nnoremap L $
+vnoremap L $
 
 " Yank to the end of line
 nnoremap Y y$
