@@ -439,15 +439,14 @@ local actions = require('telescope.actions')
 require('telescope').setup{
   defaults = {
     set_env = {['COLORTERM'] = 'truecolor'},
-    results_height = 1,
-    results_width = 0.8,
     layout_strategy = "horizontal", 
-    prompt_position = "top",
     sorting_strategy = "ascending",
-    --width = 0.25,
-    --layout_config = {
-    --  preview_width = 0.65,    
-    --},
+    layout_config = {
+        prompt_position = "top",
+        horizontal = {
+            preview_width = 0.6,
+        }
+    },
     mappings = {
       i = {
         ["<C-j>"] = actions.move_selection_next,
