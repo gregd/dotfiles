@@ -102,7 +102,7 @@ syntax enable
 filetype plugin indent on
 
 set number                  " Line numbers on
-set relativenumber          " Relative numbers on
+" set relativenumber          " Relative numbers on
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 set autoindent
@@ -148,19 +148,6 @@ augroup vimrc_incsearch_highlight
   autocmd CmdlineEnter /,\? :set hlsearch
   autocmd CmdlineLeave /,\? :set nohlsearch
 augroup END
-
-" Quit normal mode
-"nnoremap <silent> <Leader>q  :q<CR>
-"nnoremap <silent> <Leader>Q  :qa!<CR>
-
-" Quick command mode
-"nnoremap <CR> :
-" In the quickfix window, <CR> is used to jump to the error under the cursor, so undefine the mapping there.
-"autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
-
-" Left and right can switch buffers
-"nnoremap <left> :bp<CR>
-"nnoremap <right> :bn<CR>
 
 " Visual shifting (does not exit Visual mode)
 vnoremap < <gv
@@ -220,10 +207,10 @@ nnoremap <Leader>wh <C-W>h
 nnoremap <Leader>wl <C-W>l
 nnoremap <Leader>wo <C-W>o
 
-nnoremap <Leader>wH <C-W>8<
-nnoremap <Leader>wL <C-W>8>
-nnoremap <Leader>wJ :resize +8<CR>
-nnoremap <Leader>wK :resize -8<CR>
+nnoremap <Leader>wH <C-W>10<
+nnoremap <Leader>wL <C-W>10>
+nnoremap <Leader>wJ :resize +10<CR>
+nnoremap <Leader>wK :resize -10<CR>
 nnoremap <Leader>we <C-W>=
 nnoremap <Leader>ws <C-W>s
 nnoremap <Leader>wv <C-W>v
@@ -533,7 +520,7 @@ let bufferline.icon_separator_active = ''
 
 " Git status 
 nnoremap <silent>    <Leader>gitd :Gvdiffsplit<CR>
-nnoremap <silent>    <Leader>gitl :Glog --<CR>
+nnoremap <silent>    <Leader>gitl :Gclog --<CR>
 
 lua <<EOF
 -- Jump anywhere in a document
