@@ -524,6 +524,7 @@ nnoremap <silent>    <Leader>gitl :Gclog --<CR>
 
 lua <<EOF
 -- Jump anywhere in a document
+require('hop').setup({create_hl_autocmd = true})
 vim.api.nvim_set_keymap('n', '<leader>ga', "<cmd>lua require'hop'.hint_words()<cr>", {})
 
 -- Git signs 
