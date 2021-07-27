@@ -21,7 +21,7 @@ set incsearch
 set ignorecase
 set smartcase
 set nu
-set relativenumber
+"set relativenumber
 set scrolloff=6
 set whichwrap+=<,>,h,l  " Allow backspace and cursor keys to cross line boundaries
 
@@ -31,18 +31,49 @@ set ideastatusicon=gray
 set idearefactormode=keep
 
 """ Mappings --------------------------------
-nnoremap J <Nop>
-nnoremap <Leader>j J
-nnoremap K <Nop>
+
+" Visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
 
 " Move to the start of line
 nnoremap H ^
+vnoremap H ^
 " Move to the end of line
 nnoremap L $
+vnoremap L $
 
 " Yank to the end of line
 nnoremap Y y$
 
+nnoremap J <Nop>
+nnoremap <Leader>j J
+nnoremap K <Nop>
+
+" do not overwritte the default register
+vnoremap <Leader>p "_dP
+vnoremap <Leader>d "_d
+nnoremap <Leader>d "_d
+
+" paste many times over selected text (doesn't work in IdeaVim)
+"xnoremap <expr> p 'pgv"'.v:register.'y`>'
+"xnoremap <expr> P 'Pgv"'.v:register.'y`>'
+
+" Open new line below and above current line
+nnoremap <Leader>o o<esc>
+nnoremap <Leader>O O<esc>
+
+" qq to record, Q to replay
+nnoremap Q @q
+
+" Search results centered please
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <silent> g* g*zz
+
+" Idea plugins
 map <Leader> <Plug>(easymotion-prefix)
 
 "map <leader>f <Plug>(easymotion-s)
