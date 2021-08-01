@@ -14,7 +14,7 @@ set easymotion
 "let g:argtextobj_pairs="[:],(:),<:>"
 
 """ Common settings -------------------------
-set clipboard=ideaput
+set clipboard=ideaput,unnamedplus
 set showmode
 set so=5
 set incsearch
