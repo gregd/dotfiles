@@ -67,7 +67,7 @@ Plug 'phaazon/hop.nvim'
 Plug 'glepnir/galaxyline.nvim'
 
 " Indent lines
-Plug 'lukas-reineke/indent-blankline.nvim', { 'branch': 'lua' }
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 " Fast comment line
 Plug 'terrortylor/nvim-comment'
