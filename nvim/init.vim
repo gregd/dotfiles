@@ -27,7 +27,6 @@ Plug 'gregd/darcula'
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
-Plug 'onsails/lspkind-nvim'
 
 " Completion
 Plug 'hrsh7th/nvim-cmp'
@@ -306,11 +305,6 @@ cmp.setup({
     { name = 'buffer' },
     { name = 'path' },
   },
-})
-
--- Add icons to LSP suggestions
-require('lspkind').init({
-    with_text = true,
 })
 
 -- Easy code commetns 
