@@ -418,8 +418,6 @@ EOF
 nnoremap <leader>nt :NvimTreeToggle<CR>
 nnoremap <leader>nr :NvimTreeRefresh<CR>
 nnoremap <leader>nf :NvimTreeFindFile<CR>
-let g:nvim_tree_indent_markers = 1
-let g:nvim_tree_group_empty = 1
 
 lua <<EOF
 require'nvim-tree'.setup {
@@ -433,13 +431,6 @@ require'nvim-tree'.setup {
   ignore_ft_on_setup  = {},
   -- opens the tree when changing/opening a new tab if the tree wasn't previously opened
   open_on_tab         = false,
-  -- hijacks new directory buffers when they are opened.
-  update_to_buf_dir   = {
-    -- enable the feature
-    enable = true,
-    -- allow to open the tree if it was previously closed
-    auto_open = true,
-  },
   -- hijack the cursor in the tree to put it at the start of the filename
   hijack_cursor       = false,
   -- updates the root directory of the tree on `DirChanged` (when your run `:cd` usually)
@@ -468,8 +459,11 @@ require'nvim-tree'.setup {
     width = 40,
     -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
     side = 'left',
-    -- if true the tree will resize itself after opening a file
-    auto_resize = false,
+  },
+  renderer = {
+    indent_markers = {
+      enable = true,
+    }
   }
 }
 EOF
