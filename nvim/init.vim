@@ -87,7 +87,7 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'windwp/nvim-spectre'
 
 " Key bindings help
-Plug 'liuchengxu/vim-which-key'
+"Plug 'liuchengxu/vim-which-key'
 
 " Start-up screen
 Plug 'glepnir/dashboard-nvim'
@@ -176,7 +176,7 @@ nnoremap K <Nop>
 "nnoremap <Leader>k K
 
 " Display help
-nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+"nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 
 " Toggle pastemode
 nnoremap <silent> <Leader>tp :setlocal paste!<CR>
