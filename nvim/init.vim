@@ -345,13 +345,16 @@ local actions = require('telescope.actions')
 require('telescope').setup{
   defaults = {
     set_env = {['COLORTERM'] = 'truecolor'},
-    layout_strategy = "horizontal", 
     sorting_strategy = "ascending",
+    layout_strategy = "vertical",
     layout_config = {
+        vertical = {
+            width = 0.8,
+            height = 0.95,
+            preview_height = 0.65,
+        }, 
+        mirror = true, 
         prompt_position = "top",
-        horizontal = {
-            preview_width = 0.6,
-        }
     },
     mappings = {
       i = {
