@@ -528,6 +528,29 @@ require('gitsigns').setup({
     map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
   end
 })
+
+-- Start-up screen
+local db = require('dashboard')
+db.custom_header = {
+            '',
+            '       Neovim IDE with LSP      ',
+            '',
+            ''}
+db.custom_center = {
+  { icon = '  ',
+    desc = 'Recently opened files                   ',
+    action = 'Telescope oldfiles'},
+  { icon = '  ',
+    desc = 'Find File                               ',
+    action = 'Telescope find_files'},
+  { icon = '  ',
+    desc = 'Find word                               ',
+    action = 'Telescope live_grep'},
+  { icon = '  ',
+    desc ='Latest git commits                       ',
+    action = 'Telescope git_commits'},
+}
+
 EOF
 hi! link GitSignsAdd PositiveSign
 hi! link GitSignsChange WarningSign 
@@ -543,29 +566,4 @@ luafile ~/.config/nvim/eviline.lua
 " Indent lines
 let g:indentLine_char = ''
 let g:indent_blankline_filetype = ['vim', 'rust']
-
-" Start-up screen
-let g:dashboard_default_executive = 'telescope'
-let g:dashboard_custom_footer = ['']
-let g:dashboard_custom_header = [
-            \ '',
-            \'       /\          /\          /\',
-            \'    /\//\\/\    /\//\\/\    /\//\\/\',
-            \' /\//\\\///\\/\//\\\///\\/\//\\\///\\/\',
-            \'//\\\//\/\\///\\\//\/\\///\\\//\/\\///\\',
-            \'\\//\/                            \/\\//',
-            \' \/                                  \/',
-            \' /\                                  /\',
-            \'//\\       Neovim IDE with LSP      //\\',
-            \'\\//                                \\//',
-            \' \/                                  \/',
-            \' /\                                  /\',
-            \'//\\/\                            /\//\\',
-            \'\\///\\/\//\\\///\\/\//\\\///\\/\//\\\//',
-            \' \/\\///\\\//\/\\///\\\//\/\\///\\\//\/',
-            \'    \/\\//\/    \/\\//\/    \/\\//\/',
-            \'       \/          \/          \/',
-            \'',
-            \ '',
-            \ ]
 
