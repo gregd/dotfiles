@@ -47,6 +47,7 @@ Plug 'simrat39/rust-tools.nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-ui-select.nvim'
 
 " fzf
 Plug 'junegunn/fzf'
@@ -224,16 +225,67 @@ nnoremap <Leader>wv <C-W>v
 
 nnoremap <silent> <C-l> :cnext<CR>zz
 nnoremap <silent> <C-h> :cprev<CR>zz
-"nnoremap <leader>j :lnext<CR>zz
-"nnoremap <leader>k :lprev<CR>zz
-"nnoremap <leader>ps :lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep For > ")})<CR>
-"nnoremap <leader>pw :lua require('telescope.builtin').grep_string { search = vim.fn.expand("<cword>") }<CR>
+
+" File explorer
+nnoremap <leader>nt :NvimTreeToggle<CR>
+nnoremap <leader>nr :NvimTreeRefresh<CR>
+nnoremap <leader>nf :NvimTreeFindFile<CR>
+
+" Top tabline
+nnoremap <silent>    <C-j> :BufferPrevious<CR>
+nnoremap <silent>    <C-k> :BufferNext<CR>
+nnoremap <silent>    <C-q> :BufferClose<CR>
+let bufferline = get(g:, 'bufferline', {})
+let bufferline.tabpages = v:false
+let bufferline.closable = v:true
+let bufferline.icon_separator_active = ''
+
+" Git status 
+nnoremap <silent>    <Leader>gitd :Gvdiffsplit<CR>
+nnoremap <silent>    <Leader>gitl :Gclog --<CR>
+
+" Auto-save files
+let g:auto_save = 1
+let g:auto_save_silent = 1
+
+" Status line
+luafile ~/.config/nvim/eviline.lua
+
+" Indent lines
+let g:indentLine_char = ''
+let g:indent_blankline_filetype = ['vim', 'rust']
+
+" Replace in multiple files
+nnoremap <leader>sr :lua require('spectre').open()<CR>
+
+" Telescope fuzzy finder
+nnoremap <leader>fjf <cmd>Telescope find_files<cr>
+nnoremap <leader>ff <cmd>Telescope git_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fq <cmd>Telescope quickfix<cr>
+nnoremap <leader>fjh <cmd>Telescope help_tags<cr>
+nnoremap <leader>fs <cmd>Telescope current_buffer_fuzzy_find<cr>
+nnoremap <leader>fc <cmd>Telescope grep_string<cr>
+nnoremap <leader>fjs <cmd>lua require('telescope.builtin').git_status()<cr>
+nnoremap <leader>fjc <cmd>lua require('telescope.builtin').git_commits()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers({ show_all_buffers = true })<cr>
+nnoremap <leader>fo <cmd>lua require('telescope.builtin').oldfiles()<cr>
+nnoremap <leader>fja <cmd>lua require('telescope.builtin').commands()<cr>
+nnoremap <leader>fp <cmd>lua require('telescope.builtin').registers()<cr>
+nnoremap <leader>fr <cmd>lua require('telescope.builtin').lsp_references()<cr>
+nnoremap <leader>fd <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
+nnoremap <leader>fw <cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>
+nnoremap <leader>fe <cmd>lua require('telescope.builtin').diagnostics()<cr>
+
+" fzf
+let g:fzf_preview_window = ['right:70%', 'ctrl-/']
 
 " -------------------- LSP ---------------------------------
 :lua <<EOF
 local nvim_lsp = require('lspconfig')
 local opts = {
-    tools = { -- rust-tools options
+    tools = { 
+        -- rust-tools options
         autoSetHints = true,
         hover_with_actions = true,
         inlay_hints = {
@@ -269,9 +321,16 @@ vim.api.nvim_set_keymap('n', '<leader>lwr', '<cmd>lua vim.lsp.buf.remove_workspa
 vim.api.nvim_set_keymap('n', '<leader>lwl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>lh',  '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>lr',  '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>la',  '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>lf',  '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-vim.api.nvim_set_keymap('n', '[d',          '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-vim.api.nvim_set_keymap('n', ']d',          '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+vim.api.nvim_set_keymap('n', ']d',          '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+vim.api.nvim_set_keymap('n', '[d',          '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
 
 -- Completion
 local cmp = require'cmp'
@@ -301,7 +360,7 @@ cmp.setup({
   -- Installed sources
   sources = {
     { name = 'nvim_lsp' },
-    { name = 'vsnip' },
+    -- { name = 'vsnip' },
     { name = 'buffer' },
     { name = 'path' },
   },
@@ -314,33 +373,8 @@ vim.api.nvim_set_keymap("v", "<leader>cc", ":CommentToggle<CR>", {noremap=true, 
 
 -- Search and replace in many files
 require('spectre').setup()
-EOF
 
-" -------------------- LSP ---------------------------------
-
-nnoremap <leader>sr :lua require('spectre').open()<CR>
-
-" Fuzzy finder
-nnoremap <leader>fjf <cmd>Telescope find_files<cr>
-nnoremap <leader>ff <cmd>Telescope git_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fq <cmd>Telescope quickfix<cr>
-nnoremap <leader>fjh <cmd>Telescope help_tags<cr>
-nnoremap <leader>fs <cmd>Telescope current_buffer_fuzzy_find<cr>
-nnoremap <leader>fjs <cmd>lua require('telescope.builtin').git_status()<cr>
-nnoremap <leader>fjc <cmd>lua require('telescope.builtin').git_commits()<cr>
-nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers({ show_all_buffers = true })<cr>
-nnoremap <leader>fo <cmd>lua require('telescope.builtin').oldfiles()<cr>
-nnoremap <leader>fc <cmd>lua require('telescope.builtin').commands()<cr>
-nnoremap <leader>fp <cmd>lua require('telescope.builtin').registers()<cr>
-nnoremap <leader>fr <cmd>lua require('telescope.builtin').lsp_references()<cr>
-nnoremap <leader>fd <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
-nnoremap <leader>la <cmd>lua require('telescope.builtin').lsp_code_actions()<cr>
-
-" fzf
-let g:fzf_preview_window = ['right:70%', 'ctrl-/']
-
-lua <<EOF
+-- Telescope
 local actions = require('telescope.actions')
 require('telescope').setup{
   defaults = {
@@ -370,12 +404,18 @@ require('telescope').setup{
         ["<C-q>"] = actions.smart_send_to_qflist,
       }
     }
+  },
+  extensions = {
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown {
+        -- even more opts
+      }
+    }
   }
 }
-EOF
+require("telescope").load_extension("ui-select")
 
-" Syntax
-lua <<EOF
+-- Syntax
 require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = false,
@@ -415,14 +455,8 @@ require'nvim-treesitter.configs'.setup {
       },
     },
 }
-EOF
 
-" File explorer
-nnoremap <leader>nt :NvimTreeToggle<CR>
-nnoremap <leader>nr :NvimTreeRefresh<CR>
-nnoremap <leader>nf :NvimTreeFindFile<CR>
-
-lua <<EOF
+-- File explorer
 require'nvim-tree'.setup {
   -- disables netrw completely
   disable_netrw       = true,
@@ -469,22 +503,7 @@ require'nvim-tree'.setup {
     }
   }
 }
-EOF
 
-" Top tabline
-nnoremap <silent>    <C-j> :BufferPrevious<CR>
-nnoremap <silent>    <C-k> :BufferNext<CR>
-nnoremap <silent>    <C-q> :BufferClose<CR>
-let bufferline = get(g:, 'bufferline', {})
-let bufferline.tabpages = v:false
-let bufferline.closable = v:true
-let bufferline.icon_separator_active = ''
-
-" Git status 
-nnoremap <silent>    <Leader>gitd :Gvdiffsplit<CR>
-nnoremap <silent>    <Leader>gitl :Gclog --<CR>
-
-lua <<EOF
 -- Jump anywhere in a document
 require('hop').setup({create_hl_autocmd = true})
 vim.api.nvim_set_keymap('n', '<leader>ga', "<cmd>lua require'hop'.hint_words()<cr>", {})
@@ -555,18 +574,8 @@ db.custom_center = {
 }
 
 EOF
+
 hi! link GitSignsAdd PositiveSign
 hi! link GitSignsChange WarningSign 
 hi! link GitSignsDelete ErrorSign 
-
-" Auto-save files
-let g:auto_save = 1
-let g:auto_save_silent = 1
-
-" Status line
-luafile ~/.config/nvim/eviline.lua
-
-" Indent lines
-let g:indentLine_char = ''
-let g:indent_blankline_filetype = ['vim', 'rust']
 
