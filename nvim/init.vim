@@ -283,7 +283,8 @@ let g:fzf_preview_window = ['right:70%', 'ctrl-/']
 " -------------------- LSP ---------------------------------
 :lua <<EOF
 local nvim_lsp = require('lspconfig')
-local opts = {
+local nvim_rt = require('rust-tools')
+nvim_rt.setup({
     tools = { 
         -- rust-tools options
         autoSetHints = true,
@@ -293,14 +294,21 @@ local opts = {
             parameter_hints_prefix = "",
             other_hints_prefix = "",
         },
+        hover_actions = {
+          auto_focus = false,
+        },
     },
 
     -- all the opts to send to nvim-lspconfig
     -- these override the defaults set by rust-tools.nvim
     -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
     server = {
-        -- on_attach is a callback called when the language server attachs to the buffer
-        -- on_attach = on_attach,
+        on_attach = function(_, bufnr)
+          vim.keymap.set("n", "<leader>lh", nvim_rt.hover_actions.hover_actions, { buffer = bufnr })
+          vim.keymap.set("n", "<leader>ltg", nvim_rt.code_action_group.code_action_group, { buffer = bufnr })
+          -- vim.keymap.set("v", "<leader>ltr", nvim_rt.hover_range.hover_range, { buffer = bufnr })
+          -- vim.keymap.set("n", "<leader>ltx", nvim_rt.runnables.runnables())
+        end,
         settings = {
             -- to enable rust-analyzer settings visit:
             -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
@@ -312,14 +320,13 @@ local opts = {
             }
         }
     },
-}
-require('rust-tools').setup(opts)
+})
 
 local opts = { noremap=true, silent=true }
 vim.api.nvim_set_keymap('n', '<leader>lwa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>lwr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>lwl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>lh',  '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+-- vim.api.nvim_set_keymap('n', '<leader>lh',  '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>lr',  '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>la',  '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>lf',  '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
@@ -430,6 +437,8 @@ require("telescope").load_extension("ui-select")
 
 -- Syntax
 require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "bash", "c", "dockerfile", "html", "java", "json", "ruby", "rust", "toml", "yaml" },
+  auto_install = true,
   highlight = {
     enable = false,
   },
@@ -443,7 +452,7 @@ require'nvim-treesitter.configs'.setup {
     },
   },
   indent = {
-    enable = false
+    enable = true
   },
   textobjects = {
     select = {
