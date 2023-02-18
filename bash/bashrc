@@ -24,6 +24,7 @@ source "$HOME/.cargo/env"
 
 # fzf completion for command history
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+alias fzfp="fzf --preview 'bat --style=numbers --color=always -r :1000 {}'"
 
 # Modern shell prompt 
 eval "$(starship init bash)"
