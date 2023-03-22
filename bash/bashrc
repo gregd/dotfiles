@@ -1,12 +1,8 @@
 # My bash config
 
-# fix for QMK
-# Python PIP
-export PATH="$HOME/.local/bin:$PATH"
-
-# RB Env
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+if [ -f "$HOME/dev/dotfiles/bash/my-paths" ] ; then
+  source "$HOME/dev/dotfiles/bash/my-paths"
+fi
 
 # GD fix http://www.sane-project.org/
 export SANE_USB_WORKAROUND=1
@@ -18,9 +14,6 @@ alias l='exa      --time-style=iso --git --icons --group-directories-first'
 
 # for fast audio downloads
 alias youtube-dl-audio='youtube-dl --ignore-errors --output "%(title)s.%(ext)s" --extract-audio --audio-format mp3'
-
-# Rust config
-source "$HOME/.cargo/env"
 
 # fzf completion for command history
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
@@ -37,5 +30,4 @@ eval "$(zoxide init bash --cmd j)"
 
 # Alacritty
 #source ~/.bash_completion.d/alacritty
-
 
