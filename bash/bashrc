@@ -4,6 +4,9 @@ if [ -f "$HOME/dev/dotfiles/bash/my-paths" ] ; then
   source "$HOME/dev/dotfiles/bash/my-paths"
 fi
 
+export HISTSIZE=5000
+export HISTFILESIZE=20000
+
 # GD fix http://www.sane-project.org/
 export SANE_USB_WORKAROUND=1
 
