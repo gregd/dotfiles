@@ -1,0 +1,108 @@
+{
+    "workbench.colorTheme": "Default Dark+",
+    "vim.useSystemClipboard": true,
+    "files.autoSave": "afterDelay",
+    "vim.leader": "<space>",
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "H"
+            ],
+            "after": [
+                "^"
+            ]
+        },
+        {
+            "before": [
+                "L"
+            ],
+            "after": [
+                "$"
+            ]
+        },
+        {
+            "before": [
+                "Y"
+            ],
+            "after": [
+                "y",
+                "$"
+            ]
+        },
+        {
+            "before": [
+                "J"
+            ],
+            "after": [
+                "<Nop>"
+            ]
+        },
+        {
+            "before": [
+                "<Leader>",
+                "j"
+            ],
+            "after": [
+                "J"
+            ]
+        },
+        {
+            "before": [
+                "K"
+            ],
+            "after": [
+                "<Nop>"
+            ]
+        },
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "H"
+            ],
+            "after": [
+                "^"
+            ]
+        },
+        {
+            "before": [
+                "L"
+            ],
+            "after": [
+                "$"
+            ]
+        },
+        {
+            "before": [
+                "p",
+            ],
+            "after": [
+                "p",
+                "g",
+                "v",
+                "y"
+            ]
+        }
+    ],
+    "vim.visualModeKeyBindings": [
+        {
+            "before": [
+                ">"
+            ],
+            "commands": [
+                "editor.action.indentLines"
+            ]
+        },
+        {
+            "before": [
+                "<"
+            ],
+            "commands": [
+                "editor.action.outdentLines"
+            ]
+        },
+    ],
+    "editor.cursorBlinking": "solid",
+    "vim.easymotion": true,
+    "vim.useCtrlKeys": false,
+}
