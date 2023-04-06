@@ -231,14 +231,10 @@ nnoremap <leader>nt :NvimTreeToggle<CR>
 nnoremap <leader>nr :NvimTreeRefresh<CR>
 nnoremap <leader>nf :NvimTreeFindFile<CR>
 
-" Top tabline
+" Top tabline / barbar
 nnoremap <silent>    <C-j> :BufferPrevious<CR>
 nnoremap <silent>    <C-k> :BufferNext<CR>
 nnoremap <silent>    <C-q> :BufferClose<CR>
-let bufferline = get(g:, 'bufferline', {})
-let bufferline.tabpages = v:false
-let bufferline.closable = v:true
-let bufferline.icon_separator_active = ''
 
 " Git status 
 nnoremap <silent>    <Leader>gitd :Gvdiffsplit<CR>
@@ -338,6 +334,14 @@ for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
+
+vim.g.barbar_auto_setup = false
+require'barbar'.setup {
+  tabpages = false,
+  icons = {
+    separator = {left = '', right = ''},
+  },
+}
 
 -- Completion
 local cmp = require'cmp'
