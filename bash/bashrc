@@ -34,3 +34,5 @@ eval "$(zoxide init bash --cmd j)"
 # Alacritty
 #source ~/.bash_completion.d/alacritty
 
+export RIPGREP_CONFIG_PATH="$HOME/dev/dotfiles/bash/ripgrep"
+

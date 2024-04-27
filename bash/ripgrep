@@ -1,0 +1,4 @@
+# global ripgrep config file
+
+--smart-case
+
