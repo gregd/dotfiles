@@ -1,0 +1,69 @@
+" Set leader key to space
+let mapleader = " "
+
+" Change cursor shape in normal and insert mode
+if has('nvim') || has('termguicolors')
+    let &t_SI = "\e[6 q"  " Insert mode (beam)
+    let &t_EI = "\e[2 q"  " Normal mode (block)
+    let &t_SR = "\e[4 q"  " Replace mode (underline)
+endif
+
+" Enable true color support
+if has("termguicolors")
+    set termguicolors
+endif
+
+" Show the filename in the status line
+set statusline=%F       " Full file path
+set laststatus=2        " Always show status line
+
+" Common settings
+syntax on
+set showmode
+set so=5
+set incsearch
+set ignorecase
+set smartcase
+set nu
+set scrolloff=6
+set whichwrap+=<,>,h,l  " Allow backspace and cursor keys to cross line boundaries
+
+" Visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
+
+" Move to the start of line
+nnoremap H ^
+vnoremap H ^
+" Move to the end of line
+nnoremap L $
+vnoremap L $
+
+" Yank to the end of line
+nnoremap Y y$
+
+nnoremap J <Nop>
+nnoremap <Leader>j J
+nnoremap K <Nop>
+
+" do not overwritte the default register
+vnoremap <Leader>p "_dP
+vnoremap <Leader>d "_d
+nnoremap <Leader>d "_d
+
+" Open new line below and above current line
+nnoremap <Leader>o o<esc>
+nnoremap <Leader>O O<esc>
+
+" qq to record, Q to replay
+nnoremap Q @q
+
+" Search results centered please
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <silent> g* g*zz
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq

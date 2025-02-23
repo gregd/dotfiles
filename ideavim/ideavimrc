@@ -25,11 +25,6 @@ set nu
 set scrolloff=6
 set whichwrap+=<,>,h,l  " Allow backspace and cursor keys to cross line boundaries
 
-""" Idea specific settings ------------------
-set ideajoin
-set ideastatusicon=gray
-set idearefactormode=keep
-
 """ Mappings --------------------------------
 
 " Visual shifting (does not exit Visual mode)
@@ -55,10 +50,6 @@ vnoremap <Leader>p "_dP
 vnoremap <Leader>d "_d
 nnoremap <Leader>d "_d
 
-" paste many times over selected text (doesn't work in IdeaVim)
-"xnoremap <expr> p 'pgv"'.v:register.'y`>'
-"xnoremap <expr> P 'Pgv"'.v:register.'y`>'
-
 " Open new line below and above current line
 nnoremap <Leader>o o<esc>
 nnoremap <Leader>O O<esc>
@@ -72,6 +63,18 @@ nnoremap <silent> N Nzz
 nnoremap <silent> * *zz
 nnoremap <silent> # #zz
 nnoremap <silent> g* g*zz
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+" paste many times over selected text (doesn't work in IdeaVim)
+"xnoremap <expr> p 'pgv"'.v:register.'y`>'
+"xnoremap <expr> P 'Pgv"'.v:register.'y`>'
+
+""" Idea specific settings -----------------------------
+set ideajoin
+set ideastatusicon=gray
+set idearefactormode=keep
 
 " Idea plugins
 map <Leader> <Plug>(easymotion-prefix)
@@ -91,7 +94,3 @@ map <Leader> <Plug>(easymotion-prefix)
 "
 "map <leader>b <Action>(ToggleLineBreakpoint)
 "map <leader>o <Action>(FileStructurePopup)
-
-" Don't use Ex mode, use Q for formatting.
-map Q gq
-

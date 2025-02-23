@@ -1,0 +1,22 @@
+# My bashrc config
+
+export HISTSIZE=5000
+export HISTFILESIZE=20000
+
+# ls replacement
+alias ll='eza -l  --time-style=iso --git --icons --group-directories-first'
+alias la='eza -la --time-style=iso --git --icons --group-directories-first'
+alias l='eza      --time-style=iso --git --icons --group-directories-first'
+
+# for fast audio downloads
+alias yt-audio='yt-dlp --ignore-errors --output "%(title)s.%(ext)s" --extract-audio --audio-format mp3'
+
+# fzf completion for command history
+eval "$(fzf --bash)"
+alias fzfp="fzf --preview 'bat --style=numbers --color=always -r :1000 {}'"
+
+# Modern shell prompt 
+eval "$(starship init bash)"
+
+# Jump fast between directories
+eval "$(zoxide init bash --cmd j)"
