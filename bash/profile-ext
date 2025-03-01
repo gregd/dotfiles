@@ -19,9 +19,8 @@ export PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts"
 #export ANDROID_PLATFORM_TOOLS=$ANDROID_HOME/platform-tools
 #export PATH=$PATH:$ANDROID_HOME:$ANDROID_EMU:$ANDROID_TOOLS:$ANDROID_TOOLS/bin:$ANDROID_PLATFORM_TOOLS:$ANDROID_HOME/ndk-bundle
 
-# poprawka problemu instalacji pakietów npm
-# https://stackoverflow.com/a/49714908/3315
-# export PATH=~/.npm-global/bin:$PATH
+# npm global packages
+export PATH=~/.npm-global/bin:$PATH
 
 # fix for QMK, Python PIP
 # export PATH=$HOME/.local/bin:$PATH
