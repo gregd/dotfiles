@@ -6,6 +6,7 @@
 	default = simple
 
 [core]
+	editor = vim
 	autocrlf = input
 	pager = delta
 

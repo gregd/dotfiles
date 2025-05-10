@@ -68,8 +68,8 @@ nnoremap <silent> g* g*zz
 map Q gq
 
 " paste many times over selected text (doesn't work in IdeaVim)
-"xnoremap <expr> p 'pgv"'.v:register.'y`>'
-"xnoremap <expr> P 'Pgv"'.v:register.'y`>'
+xnoremap <expr> p '"_d"'.(v:register ==# '"' ? '' : v:register).'P'
+xnoremap <expr> P '"_d"'.(v:register ==# '"' ? '' : v:register).'P'
 
 """ Idea specific settings -----------------------------
 set ideajoin

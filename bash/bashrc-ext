@@ -2,6 +2,7 @@
 
 export HISTSIZE=5000
 export HISTFILESIZE=20000
+export LC_MESSAGES=en_US.UTF-8
 
 # ls replacement
 alias ll='eza -l  --time-style=iso --git --icons --group-directories-first'
