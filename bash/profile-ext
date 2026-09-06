@@ -26,8 +26,8 @@ esac
 # npm global packages
 export PATH=~/.npm-global/bin:$PATH
 
-# fix for QMK, Python PIP
-# export PATH=$HOME/.local/bin:$PATH
+# fix for QMK, Python PIP and claude
+export PATH=$HOME/.local/bin:$PATH
 
 # My custom scripts and apps
 # export PATH="$HOME/bin:$PATH"

@@ -9,6 +9,24 @@ alias ll='eza -l  --time-style=iso --git --icons --group-directories-first'
 alias la='eza -la --time-style=iso --git --icons --group-directories-first'
 alias l='eza      --time-style=iso --git --icons --group-directories-first'
 
+# Git shortcuts
+alias gs='git status'
+alias gsb='git status --short --branch'
+alias ga='git add'
+alias gaa='git add --all'
+alias gc='git commit'
+alias gcm='git commit -m'
+alias gco='git checkout'
+alias gsw='git switch'
+alias gswc='git switch -c'
+alias gb='git branch'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gl='git log --oneline --graph --decorate'
+alias gf='git fetch'
+alias gpull='git pull --ff-only'
+alias gpush='git push'
+
 # for fast audio downloads
 alias yt-audio='yt-dlp --ignore-errors --output "%(title)s.%(ext)s" --extract-audio --audio-format mp3'
 
