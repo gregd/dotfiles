@@ -43,3 +43,6 @@ fish_style_pwd_dir_length = 1
 [git_branch]
 symbol = ""
 
+[git_status]
+stashed = ""
+
