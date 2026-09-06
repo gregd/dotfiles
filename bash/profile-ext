@@ -9,8 +9,12 @@ export RIPGREP_CONFIG_PATH="$HOME/dev/dotfiles/tools/ripgrep"
 # Added by Toolbox App
 export PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts"
 
-# Java settings
-# export JAVA_HOME=`type -p java | xargs readlink -f | xargs dirname | xargs dirname`
+# Java: same JDK as Android Studio's Gradle configuration
+export JAVA_HOME="$HOME/.jdks/jbr-21.0.11"
+case ":$PATH:" in
+    *":$JAVA_HOME/bin:"*) ;;
+    *) export PATH="$JAVA_HOME/bin:$PATH" ;;
+esac
 
 # Android Studio
 #export ANDROID_HOME=/home/greg/Android/Sdk
