@@ -1,16 +1,22 @@
 # Common paths for all login and non-login shells
 
 # rbenv setup
-eval "$(rbenv init - --no-rehash bash)"
+# Initialize once per shell; rbenv otherwise prepends its shims again.
+if [[ ${RBENV_SHELL-} != bash ]] || ! declare -F rbenv >/dev/null; then
+    eval "$(rbenv init - --no-rehash bash)"
+fi
 
 # Ripgrep config
 export RIPGREP_CONFIG_PATH="$HOME/dev/dotfiles/tools/ripgrep"
 
 # Added by Toolbox App
-export PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts"
+case ":$PATH:" in
+    *":$HOME/.local/share/JetBrains/Toolbox/scripts:"*) ;;
+    *) export PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts" ;;
+esac
 
-# Java: same JDK as Android Studio's Gradle configuration
-export JAVA_HOME="$HOME/.jdks/jbr-21.0.11"
+# Java SDK
+export JAVA_HOME="$HOME/.jdks/jbr-25.0.4.1"
 case ":$PATH:" in
     *":$JAVA_HOME/bin:"*) ;;
     *) export PATH="$JAVA_HOME/bin:$PATH" ;;
@@ -24,10 +30,16 @@ esac
 #export PATH=$PATH:$ANDROID_HOME:$ANDROID_EMU:$ANDROID_TOOLS:$ANDROID_TOOLS/bin:$ANDROID_PLATFORM_TOOLS:$ANDROID_HOME/ndk-bundle
 
 # npm global packages
-export PATH=~/.npm-global/bin:$PATH
+case ":$PATH:" in
+    *":$HOME/.npm-global/bin:"*) ;;
+    *) export PATH="$HOME/.npm-global/bin:$PATH" ;;
+esac
 
 # fix for QMK, Python PIP and claude
-export PATH=$HOME/.local/bin:$PATH
+case ":$PATH:" in
+    *":$HOME/.local/bin:"*) ;;
+    *) export PATH="$HOME/.local/bin:$PATH" ;;
+esac
 
 # My custom scripts and apps
 # export PATH="$HOME/bin:$PATH"
